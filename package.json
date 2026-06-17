@@ -1,0 +1,7 @@
+{
+  "name": "kdh-tracker-vercel",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "Vercel deployment that serves kdh-tracker.html as-is via a streaming Node.js serverless function."
+}

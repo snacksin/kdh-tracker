@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "kdh-tracker.html"
+    }
+  },
+  "rewrites": [
+    { "source": "/", "destination": "/api/index" }
+  ]
+}
