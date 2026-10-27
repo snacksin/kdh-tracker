@@ -1,11 +1,14 @@
 # KPop Demon Hunters — Card Tracker (Vercel)
 
 A self-contained collection tracker for the Kayou *KPop Demon Hunters* trading
-cards (Energy + Classic editions), served on Vercel.
+cards (Series 1 Energy, Classic, Special Mini; Series 2 Energy, Classic; Laser
+Tickets), served on Vercel.
 
-The entire app is the single file [`kdh-tracker.html`](kdh-tracker.html) — HTML,
-CSS, JS, and all card artwork (embedded as base64) in one ~11.8 MB file. It is
-served **as-is**, byte for byte.
+The app is the single file [`kdh-tracker.html`](kdh-tracker.html) — HTML, CSS,
+JS, and the Series 1 artwork (embedded as base64) in one ~15 MB file. It is
+served **as-is**, byte for byte. Series 2 and ticket artwork lives in
+[`img/`](img) as small WebP files that Vercel serves as plain static files, so
+they only load when someone opens that series.
 
 ## How it's served
 

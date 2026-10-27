@@ -10,9 +10,9 @@
   <rect width="1200" height="1200" fill="url(#bg)"/>
   <!-- content laid out in the centre 630-tall band (y=285..915) that we crop to -->
   <rect x="0" y="285" width="1200" height="10" fill="url(#brand)"/>
-  <text x="600" y="435" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="10" fill="#22d3ee">KAYOU · SERIES 01</text>
+  <text x="600" y="435" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="10" fill="#22d3ee">KAYOU · SERIES 01 &amp; 02</text>
   <text x="600" y="575" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="88" font-weight="800" fill="url(#brand)">KPop Demon Hunters</text>
   <text x="600" y="657" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="50" font-weight="700" fill="#ece9f4">Card Collection Tracker</text>
-  <text x="600" y="751" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="30" font-weight="600" letter-spacing="3" fill="#8b90ad">ENERGY  ·  CLASSIC  ·  SPECIAL MINI</text>
+  <text x="600" y="751" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="30" font-weight="600" letter-spacing="3" fill="#8b90ad">ENERGY  ·  CLASSIC  ·  MINI  ·  LASER TICKETS</text>
   <text x="600" y="845" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="27" font-weight="600" fill="#22d3ee">kdh-tracker.vercel.app</text>
 </svg>
