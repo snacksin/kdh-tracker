@@ -93,8 +93,11 @@ h1{font-family:'Sora',sans-serif;font-weight:800;font-size:25px;text-align:cente
 .seo-intro h3{color:var(--text);font-family:'Sora',sans-serif;font-size:12.5px;margin:12px 0 3px;letter-spacing:.02em}
 .seo-intro ul{margin:2px 0 2px 18px}.seo-intro li{margin:1px 0}.seo-intro p{margin:4px 0}.seo-intro strong{color:var(--text)}
 .board-loading{display:grid;place-items:center;min-height:50vh;color:var(--text-dim);font-size:13px}
+.skip{position:absolute;left:12px;top:-60px;z-index:60;background:#ece9f4;color:#0e1020;font-weight:600;font-size:13px;padding:8px 14px;border-radius:99px;text-decoration:none}
+.skip:focus{top:10px}
+#board:focus{outline:none}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-button:focus-visible,input:focus-visible{outline:3px solid #ffffff;outline-offset:2px;border-radius:6px}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #ffffff;outline-offset:2px;border-radius:6px}
 @supports not ((-webkit-background-clip:text) or (background-clip:text)){h1{color:var(--g1)}}
 @media (prefers-reduced-motion: reduce){*{transition:none !important}}
 </style>
@@ -115,6 +118,7 @@ button:focus-visible,input:focus-visible{outline:3px solid #ffffff;outline-offse
 }
 </script>
 </head><body>
+<a class="skip" href="#board">Skip to cards</a>
 <main class="wrap">
 <div id="srlive" class="sr-only" aria-live="polite"></div>
 <div class="eyebrow" id="eyebrow">Kayou · Series 01</div>
@@ -143,7 +147,8 @@ button:focus-visible,input:focus-visible{outline:3px solid #ffffff;outline-offse
 <button type="button" id="importBtn">Import backup</button>
 <input type="file" id="importFile" accept="application/json,.json" class="sr-only" tabindex="-1" aria-hidden="true">
 </div>
-<div id="board"><p class="board-loading">Loading cards…</p></div>
+<div id="board" tabindex="-1"><p class="board-loading">Loading cards…</p></div>
+<noscript><p class="note">This tracker needs JavaScript turned on to show the cards and save your collection.</p></noscript>
 <section class="seo-intro">
 <h2>Kayou KPop Demon Hunters Card Tracker &amp; Checklist — Series 1 &amp; 2</h2>
 <p>A free fan-made collection tracker and checklist for the Kayou <strong>KPop Demon Hunters</strong> trading cards. Tick off every card you own across every edition and series, browse them grouped by rarity, filter by what you still need, already own, or have spares of, record serial numbers, and keep count of doubles. Everything saves locally in your browser — no signup, no account.</p>
@@ -181,6 +186,7 @@ const board=document.getElementById('board');const have_el=document.getElementBy
 function curTiers(){return DATA[edition];}
 function allCards(){return curTiers().flatMap(t=>t.cards);}
 function lbl(c){return c.name+(c.who?', '+c.who:'')+(c.code?', '+c.code:'');} // spoken name: tells apart cards that share a character name
+function chipHtml(k){return k.charAt(0)==='◇'?'<span aria-hidden="true">◇</span><span class="sr-only">parallel </span>'+esc(k.slice(1)):esc(k);} // ◇ is spoken as "white diamond" otherwise
 function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function render(){
  board.innerHTML='';
@@ -194,7 +200,7 @@ function render(){
   if(!vis.length && filter!=='all') return;
   const owned=t.cards.filter(c=>q(c.key)>=1).length;
   const sec=document.createElement('section');sec.style.setProperty('--tc',t.color);
-  sec.innerHTML='<div class="thead" role="heading" aria-level="2"><span class="tchip" style="background:'+t.color+'">'+esc(t.chip||((t.k==='CR'&&(edition==='energy'||edition==='classic'))?'◇CR':t.k))+'</span><span class="tname">'+esc(t.name)+'</span></div><div class="tnote">'+esc(t.note)+' · '+owned+'/'+t.cards.length+' owned</div>'+(t.bonus&&t.desc?'<div class="bonusnote">'+esc(t.desc)+'</div>':'');
+  sec.innerHTML='<div class="thead" role="heading" aria-level="2"><span class="tchip" style="background:'+t.color+'">'+chipHtml(t.chip||((t.k==='CR'&&(edition==='energy'||edition==='classic'))?'◇CR':t.k))+'</span> <span class="tname">'+esc(t.name)+'</span></div><div class="tnote">'+esc(t.note)+' · '+owned+'/'+t.cards.length+' owned</div>'+(t.bonus&&t.desc?'<div class="bonusnote">'+esc(t.desc)+'</div>':'');
   const grid=document.createElement('div');grid.className='grid'+(t.wide?' wide':'');
   vis.forEach(c=>{const n=q(c.key),spv=Math.max(0,n-1);
    const shared = !c.key.startsWith('E:') && !c.key.startsWith('C:'); // shared base (plain code) appears in both
@@ -219,7 +225,7 @@ function render(){
  have_el.textContent=have;document.getElementById('total').textContent=cards.length;
  document.getElementById('spc').textContent=spt;
  document.getElementById('pct').textContent=Math.round(have/cards.length*100)+'%';
- var _p=Math.round(have/cards.length*100);document.getElementById('fill').style.width=_p+'%';var _bw=document.getElementById('barwrap');if(_bw)_bw.setAttribute('aria-valuenow',_p);
+ var _p=Math.round(have/cards.length*100);document.getElementById('fill').style.width=_p+'%';var _bw=document.getElementById('barwrap');if(_bw){_bw.setAttribute('aria-valuenow',_p);_bw.setAttribute('aria-valuetext',have+' of '+cards.length+' owned, '+_p+'%');}
 }
 function obj(i){return st[i]||{c:0,s:''}}
 function chg(i,d,name){const o=obj(i);o.c=Math.max(0,o.c+d);if(!o.c&&!o.s)delete st[i];else st[i]=o;render();save();var _c=[].find.call(board.querySelectorAll('.card'),function(x){return x.dataset.k===i;});if(_c){var _b=_c.querySelector(d<0&&!_c.querySelector('.minus').disabled?'.minus':'.plus');if(_b)_b.focus();}var l=document.getElementById('srlive');if(l)l.textContent=(name||'Card')+': '+((st[i]&&st[i].c)||0)+' owned';}
